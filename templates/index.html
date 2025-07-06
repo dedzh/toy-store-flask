@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Каталог игрушек{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Каталог игрушек</h1>
+
+<!-- Фильтры -->
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-4">
+        <label for="category" class="form-label">Категория</label>
+        <select class="form-select" id="category" name="category_id">
+            <option value="">Все</option>
+            {% for category in categories %}
+               <option value="{{ category.id }}" {% if request.args.get('category_id') == category.id|string %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-4">
+        <label for="min_age" class="form-label">Возраст от</label>
+        <input type="number" class="form-control" id="min_age" name="min_age" value="{{ request.args.get('min_age', '') }}">
+    </div>
+
+    <div class="col-md-4">
+        <label for="search" class="form-label">Поиск</label>
+        <div class="input-group">
+            <input type="text" class="form-control" id="search" name="search" value="{{ request.args.get('search', '') }}">
+            <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+        </div>
+    </div>
+</form>
+
+<!-- Товары -->
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    {% for product in products %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img src="{{ url_for('static', filename='images/' + (product.image_filename or 'splash.jpg')) }}" class="card-img-top" alt="{{ product.name }}">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text text-muted small mb-1">
+                        {{ product.description[:80] + '...' if product.description }}
+                    </p>
+                    <p class="card-text fw-bold mb-2">{{ product.price }} ₽</p>
+                    <a href="{{ url_for('product', product_id=product.id) }}" class="btn btn-outline-primary mt-auto">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p class="text-muted">Товары не найдены.</p>
+    {% endfor %}
+</div>
+{% endblock %}

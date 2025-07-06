@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="orders-container">
+    <h2>История ваших заказов</h2>
+    
+    {% if orders %}
+        <div class="orders-list">
+            {% for order in orders %}
+                <div class="order-card">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <span class="order-id">Заказ #{{ order['id'] }}</span>
+                            <span class="order-date">{{ order['order_date'] }}</span>
+                        </div>
+                        <span class="order-status {{ order['status']|lower }}">{{ order['status'] }}</span>
+                    </div>
+                    
+                    <div class="order-summary">
+                        <span>Сумма заказа:</span>
+                        <span class="order-total">{{ order['total'] }} ₽</span>
+                    </div>
+                    
+                    <div class="order-actions">
+                        <a href="#" class="btn-details">Подробнее о заказе</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="no-orders">
+            <img src="https://via.placeholder.com/200x200?text=📦" alt="Нет заказов">
+            <h3>У вас пока нет заказов</h3>
+            <p>Начните покупки в нашем каталоге товаров</p>
+            <a href="{{ url_for('index') }}" class="btn-shop">Перейти в каталог</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+<style>
+.orders-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 2rem;
+}
+
+.orders-list {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.order-card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-bottom: 1px solid #eee;
+}
+
+.order-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.order-id {
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+}
+.order-date {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.order-status {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.order-status.оплачен, 
+.order-status.создан {
+    background: #FF9800;
+    color: white;
+}
+
+.order-status.в\ обработке {
+    background: #2196F3;
+    color: white;
+}
+
+.order-status.отправлен, 
+.order-status.доставлен {
+    background: #4CAF50;
+    color: white;
+}
+
+.order-status.отменен {
+    background: #f44336;
+    color: white;
+}
+
+.order-summary {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    font-size: 1.1rem;
+}
+
+.order-total {
+    font-weight: bold;
+    color: #e91e63;
+}
+
+.order-actions {
+    padding: 1rem;
+    border-top: 1px solid #eee;
+    text-align: right;
+}
+
+.btn-details {
+    color: #2196F3;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.btn-details:hover {
+    text-decoration: underline;
+}
+
+.no-orders {
+    text-align: center;
+    padding: 2rem;
+}
+
+.no-orders img {
+    max-width: 200px;
+    margin-bottom: 1rem;
+}
+
+.no-orders h3 {
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.no-orders p {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.btn-shop {
+    display: inline-block;
+    background: #2196F3;
+    color: white;
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.btn-shop:hover {
+    background: #0b7dda;
+}
+</style>

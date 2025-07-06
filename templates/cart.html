@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="cart-container">
+    <h2>Ваша корзина</h2>
+    
+    {% if products %}
+        <div class="cart-items">
+            {% for product in products %}
+                <div class="cart-item">
+                    <div class="item-image">
+                        <img src="{{ url_for('static', filename='images/' + (product.image_filename or 'splash.jpg')) }}" alt="{{ product['name'] }}">
+                    </div>
+                    
+                    <div class="item-details">
+                        <h3>{{ product['name'] }}</h3>
+                        <p class="price">{{ product['price'] }} ₽ × {{ product['quantity'] }} = 
+                            <span class="subtotal">{{ product['subtotal'] }} ₽</span>
+                        </p>
+                    </div>
+                    
+                    <form action="{{ url_for('cart') }}" method="post" class="item-actions">
+                        <input type="hidden" name="product_id" value="{{ product['id'] }}">
+                        <input type="hidden" name="quantity" value="0">
+                        <button type="submit" class="btn-remove">✕</button>
+                    </form>
+</div>
+            {% endfor %}
+        </div>
+        
+        <div class="cart-summary">
+            <div class="summary-row">
+                <span>Итого:</span>
+                <span class="total">{{ total }} ₽</span>
+            </div>
+            
+            <div class="cart-actions">
+                <a href="{{ url_for('index') }}" class="btn-continue">Продолжить покупки</a>
+                <form action="{{ url_for('checkout') }}" method="post">
+                    <button type="submit" class="btn-checkout">Оформить заказ</button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <div class="cart-empty">
+            <img src="https://via.placeholder.com/200x200?text=🛒" alt="Пустая корзина">
+            <h3>Ваша корзина пуста</h3>
+            <p>Добавьте товары из каталога, чтобы продолжить покупки</p>
+            <a href="{{ url_for('index') }}" class="btn-shop">Перейти в каталог</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+`
+<style>
+.cart-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 2rem;
+}
+
+.cart-items {
+    margin-bottom: 2rem;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+    gap: 1rem;
+}
+
+.item-image {
+    width: 80px;
+    height: 80px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-image img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.item-details {
+    flex-grow: 1;
+}
+
+.item-details h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+.price {
+    color: #666;
+}
+
+.subtotal {
+    font-weight: bold;
+    color: #e91e63;
+}
+
+.item-actions {
+    margin-left: auto;
+}
+
+.btn-remove {
+    background: none;
+    border: none;
+    color: #f44336;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+.btn-remove:hover {
+    background: #ffebee;
+}
+
+.cart-summary {
+    border-top: 2px solid #eee;
+    padding-top: 1.5rem;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.total {
+    color: #e91e63;
+    font-size: 1.4rem;
+}
+
+.cart-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.btn-continue, .btn-checkout {
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-continue {
+    background: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.btn-continue:hover {
+    background: #e0e0e0;
+}
+
+.btn-checkout {
+    background: #4CAF50;
+    color: white;
+    flex-grow: 1;
+}
+
+.btn-checkout:hover {
+    background: #45a049;
+}
+
+.cart-empty {
+    text-align: center;
+    padding: 2rem;
+}
+
+.cart-empty img {
+    max-width: 200px;
+    margin-bottom: 1rem;
+}
+
+.cart-empty h3 {
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.cart-empty p {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.btn-shop {
+    display: inline-block;
+    background: #2196F3;
+    color: white;
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.btn-shop:hover {
+    background: #0b7dda;
+}
+
+@media (max-width: 768px) {
+    .cart-actions {
+        flex-direction: column;
+    }
+}
+</style>

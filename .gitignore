@@ -1,0 +1,20 @@
+# Окружение
+venv/
+__pycache__/
+*.pyc
+
+# IDE
+.vscode/
+.idea/
+
+# База данных
+toy_store.db
+
+# Логи и временные файлы
+*.log
+*.tmp
+
+# ОС
+.DS_Store
+Thumbs.db
+`
