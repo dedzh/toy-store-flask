@@ -34,7 +34,7 @@
 ### 1. Клонируйте репозиторий
 
 ```bash
-git clone https://github.com/your-username/toy-store-flask.git
+git clone https://github.com/dedzh/toy-store-flask
 cd toy-store-flask
 ```
 ### 2. Установите виртуальное окружение и зависимости
