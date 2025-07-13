@@ -54,6 +54,9 @@ python init_db.py
 ```bash
 python app.py
 ```
+### 3. Ссылка на рабочий сайт
+
+https://dedushkazh.pythonanywhere.com/
 
 ## 🛠 Зависимости
 
