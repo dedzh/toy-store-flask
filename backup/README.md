@@ -47,11 +47,16 @@ source venv/bin/activate     # macOS/Linux
 pip install -r requirements.txt
 ```
 
-### 3. Создайте и заполните базу данных
+### 3.Запуск проекта локально
+Перед запуском перепроверьте клюс от базы данных
+Запуск:
+```bash
+python app.py
+```
+Опцианально(если отсутсвует база данных):
 ```bash
 python init_db.py
 ```
-
 ### 4.Ссылка на сайт
 
 https://dedushkazh.pythonanywhere.com/

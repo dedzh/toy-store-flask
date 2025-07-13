@@ -19,7 +19,7 @@ from werkzeug.security import generate_password_hash
 
 DATABASE = 'toy_store.db'
 
-def initialize_database():
+def init_db():
     """
     Инициализирует базу данных, создаёт таблицы и наполняет их тестовыми данными.
     При наличии старой базы — удаляет её.
@@ -137,37 +137,37 @@ def initialize_database():
 
     # Товары
     products = [
-        ('LEGO Technic', 5999.99, 15, 1, 'LEGO', 'Пластик', 8, 0,'splash.jpg'),
-        ('Монополия Deluxe', 2499.50, 8, 2, 'Hasbro', 'Картон', 6, 0,'splash.jpg'),
-        ('Барби Дримхаус', 8999.99, 5, 3, 'Mattel', 'Пластик', 3, 0,'splash.jpg'),
-        ('Дрон DJI Mavic', 32999.99, 3, 4, 'DJI', 'Пластик', 14, 1,'splash.jpg'),
-        ('Конструктор Metall', 3599.00, 20, 1, 'Gigo', 'Металл', 6, 0,'splash.jpg'),
-        ('UNO Карты', 599.00, 30, 2, 'Mattel', 'Картон', 3, 0,'splash.jpg'),
-        ('LOL Surprise', 2499.00, 12, 3, 'MGA Entertainment', 'Пластик', 4, 0,'splash.jpg'),
-        ('Радиоуправляемый вертолет', 4599.99, 7, 4, 'Syma', 'Пластик', 8, 1,'splash.jpg'),
-        ('Магформерс Basic', 7990.00, 9, 1, 'Magnetic', 'Пластик/магнит', 3, 0,'splash.jpg'),
-        ('Дженга Классик', 1299.00, 18, 2, 'Hasbro', 'Дерево', 6, 0,'splash.jpg'),
-        ('Winx Кукла Bloom', 1599.00, 10, 3, 'Giochi Preziosi', 'Пластик', 3, 0,'splash.jpg'),
-        ('RC Машина Lamborghini', 7599.00, 6, 4, 'WLtoys', 'Пластик', 8, 1,'splash.jpg'),
-        ('LEGO Star Wars', 8999.00, 11, 1, 'LEGO', 'Пластик', 9, 0,'splash.jpg'),
-        ('Эрудит Премиум', 3499.00, 7, 2, 'Mattel', 'Пластик', 10, 0,'splash.jpg'),
-        ('Братц Кукла', 1999.00, 14, 3, 'MGA Entertainment', 'Пластик', 5, 0,'splash.jpg'),
-        ('RC Катер', 5999.00, 4, 4, 'JJRC', 'Пластик', 12, 1,'splash.jpg'),
-        ('Tegu Блочный конструктор', 11999.00, 5, 1, 'Tegu', 'Дерево/магнит', 4, 0,'splash.jpg'),
-        ('Catan Колонизаторы', 4990.00, 9, 2, 'Asmodee', 'Картон', 10, 0,'splash.jpg'),
-        ('Frozen Эльза', 2999.00, 8, 3, 'Disney', 'Пластик', 3, 0,'splash.jpg'),
-        ('RC Танк с ИК-пушкой', 3899.00, 7, 4, 'Heng Long', 'Пластик', 10, 1,'splash.jpg')
+        ('LEGO Technic', 5999.99, 15, 1, 'LEGO', 'Пластик', 8, 0),
+        ('Монополия Deluxe', 2499.50, 8, 2, 'Hasbro', 'Картон', 6, 0),
+        ('Барби Дримхаус', 8999.99, 5, 3, 'Mattel', 'Пластик', 3, 0),
+        ('Дрон DJI Mavic', 32999.99, 3, 4, 'DJI', 'Пластик', 14, 1),
+        ('Конструктор Metall', 3599.00, 20, 1, 'Gigo', 'Металл', 6, 0),
+        ('UNO Карты', 599.00, 30, 2, 'Mattel', 'Картон', 3, 0),
+        ('LOL Surprise', 2499.00, 12, 3, 'MGA Entertainment', 'Пластик', 4, 0),
+        ('Радиоуправляемый вертолет', 4599.99, 7, 4, 'Syma', 'Пластик', 8, 1),
+        ('Магформерс Basic', 7990.00, 9, 1, 'Magnetic', 'Пластик/магнит', 3, 0),
+        ('Дженга Классик', 1299.00, 18, 2, 'Hasbro', 'Дерево', 6, 0),
+        ('Winx Кукла Bloom', 1599.00, 10, 3, 'Giochi Preziosi', 'Пластик', 3, 0),
+        ('RC Машина Lamborghini', 7599.00, 6, 4, 'WLtoys', 'Пластик', 8, 1),
+        ('LEGO Star Wars', 8999.00, 11, 1, 'LEGO', 'Пластик', 9, 0),
+        ('Эрудит Премиум', 3499.00, 7, 2, 'Mattel', 'Пластик', 10, 0),
+        ('Братц Кукла', 1999.00, 14, 3, 'MGA Entertainment', 'Пластик', 5, 0),
+        ('RC Катер', 5999.00, 4, 4, 'JJRC', 'Пластик', 12, 1),
+        ('Tegu Блочный конструктор', 11999.00, 5, 1, 'Tegu', 'Дерево/магнит', 4, 0),
+        ('Catan Колонизаторы', 4990.00, 9, 2, 'Asmodee', 'Картон', 10, 0),
+        ('Frozen Эльза', 2999.00, 8, 3, 'Disney', 'Пластик', 3, 0),
+        ('RC Танк с ИК-пушкой', 3899.00, 7, 4, 'Heng Long', 'Пластик', 10, 1)
     ]
     cursor.executemany("""
         INSERT INTO products (name, price, stock_quantity, category_id, manufacturer, material, age_min, batteries_included)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     """, products)
 
     # Пользователи
     password_hash = generate_password_hash('123456')
     users = [
         ('ivanov@example.com', password_hash, 'Иван Иванов', 'Москва, ул. Тверская, д.10, кв.25', '+79161234567'),
-       ('petrova@mail.ru', password_hash, 'Елена Петрова', 'Санкт-Петербург, Невский пр., д.45', '+78125556677'),
+        ('petrova@mail.ru', password_hash, 'Елена Петрова', 'Санкт-Петербург, Невский пр., д.45', '+78125556677'),
         ('sidorov@gmail.com', password_hash, 'Алексей Сидоров', 'Екатеринбург, ул. Ленина, д.3', '+73432897654'),
         ('smirnova@yandex.ru', password_hash, 'Ольга Смирнова', 'Новосибирск, Красный пр., д.100', '+73832223344'),
         ('kuznetsov@outlook.com', password_hash, 'Дмитрий Кузнецов', 'Казань, ул. Баумана, д.15', '+78435554433'),
@@ -257,5 +257,5 @@ def initialize_database():
     print("✅ База данных успешно создана и заполнена тестовыми данными!")
 
 # Исполнение при запуске как скрипт
-if __name__ == "main":
-    initialize_database()
+if __name__ == "__main__":
+    init_db()

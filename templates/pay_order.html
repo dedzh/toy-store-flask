@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Оплата заказа #{{ order.id }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Оплата заказа #{{ order.id }}</h1>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>Информация для оплаты</h2>
+            </div>
+            <div class="card-body">
+                <p><strong>Дата заказа:</strong> {{ order.order_date }}</p>
+                <p><strong>Сумма к оплате:</strong> {{ order.total }} руб.</p>
+                
+                {% if payment %}
+                <div class="alert alert-info">
+                    <strong>Текущий статус оплаты:</strong> {{ payment.status }}
+                </div>
+                {% endif %}
+                
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Выберите способ оплаты:</label>
+                        <select class="form-select" name="method" required>
+                            <option value="" disabled selected>-- Выберите способ --</option>
+                            <option value="Карта">Банковская карта</option>
+                            <option value="Электронный кошелек">Электронный кошелек</option>
+                            <option value="Наличные">Наличные при получении</option>
+                        </select>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('order_details', order_id=order.id) }}" class="btn btn-secondary">
+                            Вернуться к заказу
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            Подтвердить оплату
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h3>Тестовые данные для оплаты</h3>
+            </div>
+            <div class="card-body">
+                <p>Для тестовой оплаты используйте следующие данные:</p>
+                <ul>
+                    <li><strong>Номер карты:</strong> 4242 4242 4242 4242</li>
+                    <li><strong>Срок действия:</strong> Любая будущая дата</li>
+                    <li><strong>CVV:</strong> Любые 3 цифры</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

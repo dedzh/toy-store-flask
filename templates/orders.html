@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="orders-container">
+    <h2>История ваших заказов</h2>
+    
+    {% if orders %}
+        <div class="orders-list">
+            {% for order in orders %}
+                <div class="order-card">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <span class="order-id">Заказ #{{ order['id'] }}</span>
+                            <span class="order-date">
+                                {% if order['order_date'] %}
+                                    {{ order['order_date'] }}
+                                {% else %}
+                                    Дата не указана
+                                {% endif %}
+                            </span>
+                        </div>
+                        <span class="order-status {{ order['status']|lower|replace(' ', '-') }}">{{ order['status'] }}</span>
+                    </div>
+                    
+                    <div class="order-summary">
+                        <span>Сумма заказа:</span>
+                        <span class="order-total">
+                            {% if order['total'] %}
+                                {{ "%.2f"|format(order['total']) }} ₽
+                            {% else %}
+                                0.00 ₽
+                            {% endif %}
+                        </span>
+                    </div>
+                    
+                    <div class="order-actions">
+                        <a href="{{ url_for('order_details', order_id=order['id']) }}" class="btn-details">Подробнее о заказе</a>
+                        {% if order['status'] == 'Создан' %}
+                            <a href="{{ url_for('pay_order', order_id=order['id']) }}" class="btn-pay">Оплатить</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="no-orders">
+            <img src="{{ url_for('static', filename='img/empty-orders.png') }}" alt="Нет заказов">
+            <h3>У вас пока нет заказов</h3>
+            <p>Начните покупки в нашем каталоге товаров</p>
+            <a href="{{ url_for('index') }}" class="btn-shop">Перейти в каталог</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+<style>
+.orders-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.orders-list {
+    display: grid;
+    gap: 20px;
+}
+
+.order-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.order-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.order-id {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.order-date {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.order-status {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: white;
+}
+
+.order-status.создан {
+    background: #FF9800;
+}
+
+.order-status.оплачен {
+    background: #2196F3;
+}
+
+.order-status.отправлен {
+    background: #4CAF50;
+}
+
+.order-status.доставлен {
+    background: #2E7D32;
+}
+
+.order-status.отменен {
+    background: #f44336;
+}
+
+.order-summary {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+    font-size: 1.1em;
+}
+
+.order-total {
+    font-weight: bold;
+    color: #e91e63;
+}
+
+.order-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.btn-details, .btn-pay {
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.btn-details {
+    color: #2196F3;
+    border: 1px solid #2196F3;
+}
+
+.btn-details:hover {
+    background: #E3F2FD;
+}
+
+.btn-pay {
+    background: #4CAF50;
+    color: white;
+}
+
+.btn-pay:hover {
+    background: #388E3C;
+}
+
+.no-orders {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.no-orders img {
+    max-width: 200px;
+    margin-bottom: 20px;
+}
+
+.no-orders h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.no-orders p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.btn-shop {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #2196F3;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.btn-shop:hover {
+    background: #0b7dda;
+}
+</style>

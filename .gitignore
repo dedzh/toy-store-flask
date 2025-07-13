@@ -7,8 +7,6 @@ __pycache__/
 .vscode/
 .idea/
 
-# База данных
-toy_store.db
 
 # Логи и временные файлы
 *.log
