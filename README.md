@@ -57,6 +57,11 @@ python app.py
 ### 3. Ссылка на рабочий сайт
 
 https://dedushkazh.pythonanywhere.com/
+### Для авторизации
+Email:
+ivanov@example.com
+Password:
+123456
 
 ## 🛠 Зависимости
 
